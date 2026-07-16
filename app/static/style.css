@@ -1,0 +1,79 @@
+/* Fly Faster — instrument-panel calm: pale airmass, ink, one vario-green accent. */
+:root{
+  --bg:#f3f7f9; --panel:#ffffff; --ink:#17242d; --muted:#5b6b77;
+  --accent:#0e8f62; --accent-ink:#0a6b4a; --sink:#3d5a73;
+  --line:#dde6ec; --err-bg:#fdf1ef; --err-line:#c4543d;
+  --radius:14px; --maxw:880px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,.brand{font-family:"Chivo",sans-serif;letter-spacing:-.015em}
+code,pre,.days td:last-child{font-family:"IBM Plex Mono",monospace}
+
+/* signature: climb/sink vario tape across the top */
+.vario-tape{height:6px;background:linear-gradient(90deg,
+  var(--sink) 0%, #7d94a6 35%, #e8eef2 50%, #59b98d 65%, var(--accent) 100%)}
+
+header.site{display:flex;justify-content:space-between;align-items:center;
+  max-width:var(--maxw);margin:0 auto;padding:18px 22px}
+.brand{font-weight:900;font-size:20px;color:var(--ink);text-decoration:none}
+main{max-width:var(--maxw);margin:0 auto;padding:0 22px 60px}
+footer.site{max-width:var(--maxw);margin:0 auto;padding:26px 22px 40px;
+  color:var(--muted);font-size:13.5px;border-top:1px solid var(--line)}
+footer.site a{color:var(--muted)}
+
+section{margin:0 0 52px}
+.hero{padding-top:36px}
+h1{font-size:clamp(30px,5.4vw,44px);font-weight:900;line-height:1.12;margin:0 0 14px}
+h2{font-size:24px;font-weight:700;margin:0 0 12px}
+h3{font-size:17px;margin:0 0 6px;color:var(--accent-ink)}
+.lead{font-size:18px;color:var(--muted);max-width:640px;margin:0 0 22px}
+
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+  border:0;border-radius:999px;padding:10px 22px;font-weight:700;font-family:"Chivo",sans-serif;
+  cursor:pointer;transition:background .15s}
+.btn:hover{background:var(--accent-ink)}
+.btn-big{font-size:17px;padding:13px 30px}
+.btn-small{font-size:14px;padding:7px 16px}
+
+.radar-row{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
+.radar-row figure{flex:1 1 200px;margin:0;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:14px;display:flex;align-items:center;justify-content:center}
+.radar-row svg{width:100%;height:auto}
+.caption{color:var(--muted);font-size:14.5px;max-width:720px;margin-top:14px}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+.two-col>div{background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.two-col p{margin:0;color:var(--muted);font-size:15px}
+
+pre{background:var(--ink);color:#dfe9f0;border-radius:var(--radius);
+  padding:18px 20px;overflow-x:auto;font-size:13.5px;line-height:1.55}
+.note{color:var(--muted);font-size:15px;max-width:680px}
+
+.methods-fold{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.methods-fold summary{cursor:pointer;padding:15px 20px;font-weight:700;font-family:"Chivo",sans-serif}
+.methods{padding:4px 24px 20px;font-size:15px}
+.methods h1{font-size:24px}.methods h2{font-size:18px;margin-top:22px}
+.methods p,.methods li{color:#33434f}
+
+.upload{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 28px;scroll-margin-top:20px}
+form{display:flex;flex-direction:column;gap:8px;max-width:520px}
+label{font-weight:700;font-size:14px;margin-top:10px;font-family:"Chivo",sans-serif}
+input[type=email],input[type=file]{border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;font-size:15px;background:var(--bg)}
+input:focus{outline:2px solid var(--accent);outline-offset:1px}
+form .btn-big{margin-top:16px;align-self:flex-start}
+.privacy{color:var(--muted);font-size:13px;line-height:1.55;margin-top:14px}
+
+.error{background:var(--err-bg);border-left:4px solid var(--err-line);
+  border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:14.5px}
+
+table.days{border-collapse:collapse;margin:14px 0;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.days th,.days td{padding:8px 16px;text-align:left;border-top:1px solid var(--line);font-size:14.5px}
+.days thead th{border-top:0;background:var(--bg);font-family:"Chivo",sans-serif}

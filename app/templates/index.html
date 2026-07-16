@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <h1>See why the fast pilots are fast.</h1>
+  <p class="lead">Send us the day's IGC tracks — of a competition task or a shared XC day —
+  and you get back two reports: how every pilot compares with the field on the
+  <b>levers that drive cross-country speed</b>, and how each pilot's profile develops
+  across days. Everything is measured from the tracks alone.</p>
+  <p><a class="btn btn-big" href="#upload">Upload your tracks →</a></p>
+</section>
+
+<section class="samples">
+  <h2>Every pilot gets a profile</h2>
+  <div class="radar-row">
+    <figure>{% include "_sample1.svg" %}</figure>
+    <figure>{% include "_sample2.svg" %}</figure>
+    <figure>{% include "_sample3.svg" %}</figure>
+  </div>
+  <p class="caption">Real profiles from one flying day (10 pilots, names removed). Eight axes,
+  each <b>relative to the field of that day</b>: the dashed line is the day median, the outer
+  circle the day's best. Seven of the axes are <b>speed levers</b> — measurably linked to
+  average speed — one (<i>Flies far</i>) describes style. A spoke touching the outer circle
+  was that day's best in that lever.</p>
+</section>
+
+<section class="what">
+  <h2>What you get by email</h2>
+  <div class="two-col">
+    <div>
+      <h3>Day view</h3>
+      <p>One card per flight: speed, distance, radar profile, glide-speed distribution
+      (wind removed), glide ratio and turns per km — the whole field side by side, day by day.
+      Plus the day's wind, reconstructed from everyone's circling, and a statistics section
+      showing which levers actually correlated with speed.</p>
+    </div>
+    <div>
+      <h3>Pilot view</h3>
+      <p>For each pilot, all day profiles in chronological order plus an average card — making
+      visible how a profile develops over a season. Shown for every pilot with at least three
+      flights in your upload.</p>
+    </div>
+  </div>
+</section>
+
+<section class="folders">
+  <h2>How to prepare your zip</h2>
+  <p>One folder per flying day, named <b>YEAR_MONTH_DAY</b>, each containing that day's
+  <code>.igc</code> files. Zip the folders together — one day or a whole season:</p>
+<pre>my-tracks.zip
+├── 2026_06_18/            ← a normal XC day
+│   ├── anna.igc
+│   ├── ben.igc
+│   └── …
+├── 2026_06_21_UTC1000/    ← a race: start time in the name,
+│   └── …                     everything before 10:00 UTC is ignored
+└── 2026_07_02/
+    └── …</pre>
+  <p class="note">The comparison lives on shared conditions: the more pilots of the same
+  day you include, the more the reports can say. Single-pilot uploads work but show no field
+  to compare against.</p>
+</section>
+
+<section class="methods-sec">
+  <h2>The method, in full</h2>
+  <p>Nothing is hand-waved: the analysis is deterministic, and the description below is
+  written so that anyone starting from the raw IGC files can reconstruct the numbers.</p>
+  <details class="methods-fold">
+    <summary>Read the complete methods</summary>
+    <div class="methods">{% include "_methods.html" %}</div>
+  </details>
+</section>
+
+<section class="upload" id="upload">
+  <h2>Upload your tracks</h2>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <form method="post" action="/submit" enctype="multipart/form-data">
+    <label for="archive">Zip archive of day folders (max {{ max_mb }} MB)</label>
+    <input type="file" id="archive" name="archive" accept=".zip,application/zip" required>
+    <label for="email">Email — where we send the reports</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com"
+           value="{{ keep_email or '' }}" required>
+    <button class="btn btn-big" type="submit">Queue my analysis</button>
+    <p class="privacy">IGC files are GPS tracks of real people — upload only tracks you are
+    allowed to share, e.g. from your own group or competition. We process the archive, email
+    the two HTML reports to the address above, and <b>delete your tracks from the server</b>.
+    The email address is used only for this delivery. A full-season archive can take a while;
+    the confirmation page tells you where you are in the queue.</p>
+  </form>
+</section>
+
+{% endblock %}

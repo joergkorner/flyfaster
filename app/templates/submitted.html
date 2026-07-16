@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Queued — {{ brand }}{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Queued ✓</h1>
+  <p class="lead">Your archive is in: <b>{{ summary.n_files }}</b> flights across
+  <b>{{ summary.n_days }}</b> day folder(s){% if position %} — position <b>{{ position }}</b> in the queue{% endif %}.
+  The reports will land at <b>{{ email }}</b> when processing is done.</p>
+  {% if summary.skipped_folders %}
+  <div class="error">Heads-up: these folders were skipped because their names don't match
+  YEAR_MONTH_DAY: {{ summary.skipped_folders | join(", ") }}</div>
+  {% endif %}
+  <table class="days">
+    <thead><tr><th>Day folder</th><th>IGC files</th></tr></thead>
+    <tbody>{% for d, n in summary.days.items() %}<tr><td>{{ d }}</td><td>{{ n }}</td></tr>{% endfor %}</tbody>
+  </table>
+  <p>You can check progress here (bookmark it):
+  <a href="/job/{{ job_id }}"><code>/job/{{ job_id }}</code></a></p>
+  <p><a class="btn" href="/">← Back to start</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+# Local test: docker compose up --build   ->   http://localhost:8000
+#
+# Without a .env file: emails are saved as files under ./data (console mode).
+# With a .env file (see README / .env.example): real emails via your Gmail.
+services:
+  web:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      DATA_DIR: /data
+      WORKER_POLL_S: "5"
+      EMAIL_BACKEND: ${EMAIL_BACKEND:-console}
+      GMAIL_USER: ${GMAIL_USER:-}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
+    volumes:
+      - ./data:/data

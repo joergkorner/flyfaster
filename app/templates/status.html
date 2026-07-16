@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Job status — {{ brand }}{% endblock %}
+{% block content %}
+<section class="hero">
+{% if not meta %}
+  <h1>Unknown job</h1>
+  <p class="lead">No job with that id. Old jobs are removed after a while.</p>
+{% else %}
+  <h1>Job {{ meta.id }}</h1>
+  {% if meta.status == "queued" %}
+    <p class="lead">⏳ Queued{% if position %} — position <b>{{ position }}</b>{% endif %}.
+    The reports go to <b>{{ meta.email }}</b> when done. This page does not auto-refresh.</p>
+  {% elif meta.status == "running" %}
+    <p class="lead">⚙️ Running — {{ meta.n_files }} flights across {{ meta.n_days }} day(s).
+    A full season can take a while.</p>
+  {% elif meta.status == "done" %}
+    <p class="lead">✅ Done — the reports were sent to <b>{{ meta.email }}</b>.
+    Check the spam folder if nothing arrived.</p>
+  {% else %}
+    <p class="lead">❌ Failed: {{ meta.message }}</p>
+    <p>Fix the archive and <a href="/#upload">upload again</a> — or reply to any of our
+    emails if it looks like a bug.</p>
+  {% endif %}
+{% endif %}
+  <p><a class="btn" href="/">← Back to start</a></p>
+</section>
+{% endblock %}
