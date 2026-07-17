@@ -49,7 +49,9 @@ def process_job(job_id: str):
             pilots_html = tmp / "schnell-fliegen-piloten.html"
             if proc.returncode != 0 or not day_html.exists():
                 tail = (proc.stdout + "\n" + proc.stderr).strip().splitlines()
-                raise RuntimeError("analysis failed: " + " | ".join(tail[-3:])[:500])
+                raise RuntimeError(f"analysis failed (exit code {proc.returncode}"
+                   + (", likely out of memory" if proc.returncode in (-9, 137) else "")
+                   + "): " + " | ".join(tail[-3:])[:400])
 
             out = jdir / "out"; out.mkdir(exist_ok=True)
             files = []
@@ -63,7 +65,7 @@ def process_job(job_id: str):
 
         # success: drop the tracks immediately; reports only if really sent
         (jdir / "upload.zip").unlink(missing_ok=True)
-        if config.EMAIL_BACKEND == "gmail":
+        if config.EMAIL_BACKEND != "console":
             shutil.rmtree(jdir / "out", ignore_errors=True)
         jobqueue.finish(job_id, "done", "reports sent")
         print(f"[worker] {job_id} done -> {email}")
