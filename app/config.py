@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 
-VERSION = "1.4"
+VERSION = "1.5"
 BRAND_NAME = os.environ.get("BRAND_NAME", "Fly Faster")
 PUBLIC_URL = os.environ.get("PUBLIC_URL", "")  # e.g. https://flyfaster.up.railway.app (used in emails)
 
@@ -32,8 +32,9 @@ WORKER_POLL_S = int(os.environ.get("WORKER_POLL_S", "20"))
 # EMAIL_BACKEND=console writes the outgoing mail to the job dir instead of
 # sending — the local/dev mode. For real sending: gmail + an App Password
 # (Google account -> Security -> 2-Step Verification -> App passwords).
-# MAIL_MODE is the current name; EMAIL_BACKEND kept as legacy fallback.
-EMAIL_BACKEND = os.environ.get("MAIL_MODE") or os.environ.get("EMAIL_BACKEND", "console")  # console | gmail | brevo
+# Hardcoded decision (Jul 2026): brevo in the cloud. LOCAL_DEV=1 switches to
+# console mode for docker-compose testing on the Mac.
+EMAIL_BACKEND = "console" if os.environ.get("LOCAL_DEV") else "brevo"
 BREVO_API_KEY = os.environ.get("BREVO_API_KEY", "")
 MAIL_SENDER = os.environ.get("MAIL_SENDER", "")                # verified sender for brevo (falls back to GMAIL_USER)
 GMAIL_USER = os.environ.get("GMAIL_USER", "")
