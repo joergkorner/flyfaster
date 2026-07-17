@@ -28,7 +28,7 @@ JOB_ID_RE = re.compile(r"^[0-9]{14}-[A-Za-z0-9_\-]{4,16}$")
 def _startup():
     config.DATA_DIR.mkdir(parents=True, exist_ok=True)
     (config.DATA_DIR / "jobs").mkdir(parents=True, exist_ok=True)
-    print(f"[app] {config.BRAND_NAME} v{config.VERSION} — data dir: {config.DATA_DIR}")
+    print(f"[app] {config.BRAND_NAME} v{config.VERSION} — data dir: {config.DATA_DIR} — mail backend: {config.EMAIL_BACKEND}")
     if config.WORKER_MODE == "thread":
         threading.Thread(target=worker.loop, daemon=True).start()
 
@@ -76,4 +76,4 @@ def job_status(request: Request, job_id: str):
 
 @app.get("/healthz", response_class=PlainTextResponse)
 def healthz():
-    return "ok"
+    return f"ok v{config.VERSION} mail={config.EMAIL_BACKEND}"

@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 
-VERSION = "1.2"
+VERSION = "1.3"
 BRAND_NAME = os.environ.get("BRAND_NAME", "Fly Faster")
 PUBLIC_URL = os.environ.get("PUBLIC_URL", "")  # e.g. https://flyfaster.up.railway.app (used in emails)
 
